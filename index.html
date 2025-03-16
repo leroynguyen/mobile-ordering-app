@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Roboto:wght@300;900&family=Smythe&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    /> -->
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <!-- <h1>Jimmy's Diner</h1>
+        <p>The best burgers and pizzas in town.</p> -->
+      </header>
+
+      <main>
+        <section class="items-container"></section>
+        <section id="checkout-container" class="checkout"></section>
+        <section id="checkout-container2"></section>
+        <div id="payment-modal" class="payment-modal">
+          <div class="close-modal-container">
+            <!-- <button id="modal-close-btn" class="modal-close-btn">X</button> -->
+          </div>
+          <div id="card-details" class="card-details">
+            <h2 id="modal-title" class="modal-title">Card Details</h2>
+            <form id="payment-form">
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Enter your name"
+                aria-label="Full Name"
+                required
+              />
+              <input
+                type="text"
+                name="creditNumber"
+                placeholder="Enter card number"
+                aria-label="Credit Card Number"
+                required
+              />
+              <input
+                type="text"
+                name="ccv"
+                placeholder="Enter CCV"
+                aria-label="CCV"
+                required
+              />
+              <button id="modal-pay-btn" class="modal-pay-btn" type="submit">
+                Pay
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>

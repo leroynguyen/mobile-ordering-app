@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Console Log Example</title>
+  </head>
+  <body>
+    <script>
+      const characters = [
+        {
+          title: "Ninja",
+          emoji: "🥷",
+          powers: ["agility", "stealth", "aggression"],
+        },
+        {
+          title: "Sorcerer",
+          emoji: "🧙",
+          powers: ["magic", "invisibility", "necromancy"],
+        },
+        {
+          title: "Ogre",
+          emoji: "👹",
+          powers: ["power", "stamina", "shapeshifting"],
+        },
+        {
+          title: "Unicorn",
+          emoji: "🦄",
+          powers: ["flight", "power", "purity"],
+        },
+      ]
+
+      characters.forEach(function (character) {
+        console.log(character)
+      })
+
+      const totalCharacters = characters.map(function (character) {
+        console.log(character)
+        return character // Ensure to return the character for the map function
+      })
+
+      console.log(totalCharacters)
+    </script>
+  </body>
+</html>
