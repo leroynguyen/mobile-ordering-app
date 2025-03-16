@@ -63,63 +63,56 @@ function hidePaymentModal() {
 
 function renderOrders() {
   const checkoutContainer = document.getElementById("checkout-container")
-
+  
   // Clear existing content
-  checkoutContainer.innerHTML = "" // Clear all content
+  checkoutContainer.innerHTML = ""
 
-  // Create and append heading
+  // Create elements
   const heading = document.createElement("h2")
-  heading.textContent = "Your Order" // Set the heading text
-  checkoutContainer.appendChild(heading) // Append the heading to the container
-
+  heading.textContent = "Your Order"
+  
   const totalPrice = orderList.reduce((total, order) => total + order.price, 0)
-
-  // Create and append total price element
   const totalPriceEl = document.createElement("div")
   totalPriceEl.id = "total-price"
-
+  
   const totalPriceLabel = document.createElement("p")
   totalPriceLabel.id = "total-price-label"
   totalPriceLabel.textContent = "Total Price:"
-
+  
   const totalPriceValue = document.createElement("p")
   totalPriceValue.id = "total-price-value"
   totalPriceValue.textContent = `$${totalPrice}`
 
   // Check if there are any orders
   if (orderList.length > 0) {
-    // Generate new order items using map
+    // Add heading first
+    checkoutContainer.appendChild(heading)
+
+    // Generate and append order items
     const orderItems = orderList
       .map((order) => {
-        const { name, price, id } = order // Destructure the first item
+        const { name, price, id } = order
         return `
-      <div class="order-item">
-          <p class="order-name">
-              ${name}
-              <button class="remove-item-btn" data-remove-item=${id}>remove</button>
-          </p>
-          <p class="order-price">
-              $${price}
-          </p>
-      </div>
-      `
+          <div class="order-item">
+              <p class="order-name">
+                  ${name}
+                  <button class="remove-item-btn" data-remove-item=${id}>remove</button>
+              </p>
+              <p class="order-price">
+                  $${price}
+              </p>
+          </div>
+        `
       })
       .join("")
+    
+    checkoutContainer.innerHTML += orderItems
 
-    // Append the generated order items to the container
-    checkoutContainer.innerHTML += orderItems // Append the order items
-
+    // Add total price and payment button
     totalPriceEl.appendChild(totalPriceLabel)
     totalPriceEl.appendChild(totalPriceValue)
-
     checkoutContainer.appendChild(totalPriceEl)
     checkoutContainer.appendChild(paymentBtn)
-  } else {
-    console.log(checkoutContainer) // Log the parent
-    console.log(paymentBtn) // Log the child you want to remove
-    checkoutContainer.removeChild(heading) // Remove heading if no orders
-    checkoutContainer.removeChild(paymentBtn) // Remove payment button if no orders
-    checkoutContainer.removeChild(totalPriceEl) // Remove total price element if no orders
   }
 }
 
