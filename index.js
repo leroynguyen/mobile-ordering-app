@@ -19,6 +19,8 @@ document.addEventListener("click", (e) => {
       (item) => e.target.dataset.removeItem == item.id
     )
     orderList.pop(matchedItem)
+  } else if (orderList.length === 0) {
+    return
   }
   renderOrders()
 })
