@@ -19,7 +19,7 @@ document.addEventListener("click", (e) => {
       (item) => e.target.dataset.removeItem == item.id
     )
     orderList.pop(matchedItem)
-  } else if (orderList.length === 0) {
+  } else if (orderList.length >= 0) {
     return
   }
   renderOrders()
@@ -41,17 +41,20 @@ function handlePaymentSubmit(e) {
 
   hidePaymentModal() // Hide the payment modal
   displayThankYouMessage() // Display a thank you message to the user
+  orderList.length = 0 // Clear the order list for a fresh start
 }
 
 // Function to display a thank you message after payment
 function displayThankYouMessage() {
-  const checkoutContainer = document.getElementsByClassName("checkout")[0]
+  // const checkoutContainer = document.getElementsByClassName("checkout")[0]
+  const checkoutContainer = document.getElementById("checkout-container")
 
   const thankYouMessage = document.createElement("h2")
-  thankYouMessage.textContent = "Thanks"
-
-  // Clear the order list permanently
-  orderList.length = 0 // Clear the orderList array
+  thankYouMessage.innerHTML = `
+    <p id="thank-you">Thanks, ${
+      document.getElementById("name-input").value
+    }! Your order is on its way!</p>
+    `
 
   checkoutContainer.innerHTML = ""
   checkoutContainer.appendChild(thankYouMessage)
@@ -65,22 +68,22 @@ function hidePaymentModal() {
 
 function renderOrders() {
   const checkoutContainer = document.getElementById("checkout-container")
-  
+
   // Clear existing content
   checkoutContainer.innerHTML = ""
 
   // Create elements
   const heading = document.createElement("h2")
   heading.textContent = "Your Order"
-  
+
   const totalPrice = orderList.reduce((total, order) => total + order.price, 0)
   const totalPriceEl = document.createElement("div")
   totalPriceEl.id = "total-price"
-  
+
   const totalPriceLabel = document.createElement("p")
   totalPriceLabel.id = "total-price-label"
   totalPriceLabel.textContent = "Total Price:"
-  
+
   const totalPriceValue = document.createElement("p")
   totalPriceValue.id = "total-price-value"
   totalPriceValue.textContent = `$${totalPrice}`
@@ -107,7 +110,7 @@ function renderOrders() {
         `
       })
       .join("")
-    
+
     checkoutContainer.innerHTML += orderItems
 
     // Add total price and payment button

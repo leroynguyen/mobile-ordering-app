@@ -27,14 +27,15 @@
   <body>
     <div class="container">
       <header>
-        <!-- <h1>Jimmy's Diner</h1>
-        <p>The best burgers and pizzas in town.</p> -->
+        <h1 id="restaurant-name" class="restaurant-text">Jimmy's Diner</h1>
+        <p id="restaurant-tagline" class="restaurant-text">
+          The best burgers and pizzas in town.
+        </p>
       </header>
 
       <main>
         <section class="items-container"></section>
-        <section id="checkout-container" class="checkout"></section>
-        <section id="checkout-container2"></section>
+        <section id="checkout-container" class="checkout-container"></section>
         <div id="payment-modal" class="payment-modal">
           <div class="close-modal-container">
             <!-- <button id="modal-close-btn" class="modal-close-btn">X</button> -->
@@ -44,6 +45,7 @@
             <form id="payment-form">
               <input
                 type="text"
+                id="name-input"
                 name="fullName"
                 placeholder="Enter your name"
                 aria-label="Full Name"
@@ -51,6 +53,7 @@
               />
               <input
                 type="text"
+                id="credit-input"
                 name="creditNumber"
                 placeholder="Enter card number"
                 aria-label="Credit Card Number"
@@ -58,6 +61,7 @@
               />
               <input
                 type="text"
+                id="ccv-input"
                 name="ccv"
                 placeholder="Enter CCV"
                 aria-label="CCV"
