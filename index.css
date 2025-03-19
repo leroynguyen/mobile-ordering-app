@@ -16,6 +16,7 @@ body {
     align-items: center; */
     /* margin: 0 auto; */
     width: 600px;
+    overflow-y: auto;
     height: 1161px;
 }
 
@@ -154,6 +155,12 @@ h2 {
     border: none;
     padding: 0;
     cursor: pointer;
+
+}
+
+.remove-item-btn:hover {
+    color: #e74c3c;
+    /* A softer red shade */
 }
 
 #total-price {
@@ -247,8 +254,20 @@ h2 {
     cursor: pointer;
 }
 
+#payment-btn:hover {
+    background-color: #14b88d;
+    /* Darker shade for hover effect */
+    color: white;
+    /* Keep text color white */
+}
+
 .payment-modal {
     display: none;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     position: fixed;
     height: 542px;
     width: 524px;
@@ -310,6 +329,69 @@ input::placeholder {
     background-color: #16d899;
 }
 
+#modal-close-btn {
+    width: auto;
+    height: auto;
+    font-weight: bold;
+    background-color: transparent;
+    color: black;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#modal-close-btn:hover {
+    color: #14b88d;
+}
+
+/* Add this class to control the visibility of the modal */
+.visible {
+    display: flex;
+    /* or use flex if you want to center content */
+}
+
+/* Existing hidden class */
+.hidden {
+    display: none;
+    /* Class to hide the modal */
+}
+
 /* questions
 - why can't we just use img tags? what's more preferred, good practice?
 - why id and class havesa me name? w */
+
+/* Base button styles */
+button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border: none;
+    border-radius: 3.9px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition */
+}
+
+
+
+
+/* Hover effects */
+button:hover {
+    background-color: #14b88d;
+    /* Darker shade for hover effect */
+    color: white;
+    /* Change text color on hover */
+}
+
+/* Specific hover effect for add-item-btn */
+.add-item-btn:hover {
+    background-color: #f0f0f0;
+    /* Light grey background on hover */
+    border-color: #cccccc;
+    /* Change border color on hover */
+}

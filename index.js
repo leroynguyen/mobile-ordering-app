@@ -13,12 +13,16 @@ document.addEventListener("click", (e) => {
     const matchedItem = menuArray.find(
       (item) => e.target.dataset.addItem == item.id
     )
+    console.log(e)
     orderList.push(matchedItem)
   } else if (e.target.dataset.removeItem) {
     const matchedItem = menuArray.find(
       (item) => e.target.dataset.removeItem == item.id
     )
     orderList.pop(matchedItem)
+  } else if (e.target.id === "modal-close-btn") {
+    console.log("123123")
+    closeModal()
   } else if (orderList.length >= 0) {
     return
   }
@@ -27,7 +31,9 @@ document.addEventListener("click", (e) => {
 
 paymentBtn.addEventListener("click", () => {
   const paymentModal = document.getElementById("payment-modal")
-  paymentModal.style.display = "inline"
+  paymentModal.classList.remove("hidden")
+  console.log("test 123 123")
+  paymentModal.classList.add("visible")
   console.log("click click")
   document.body.appendChild(paymentModal)
 })
@@ -39,7 +45,7 @@ function handlePaymentSubmit(e) {
   e.preventDefault() // Prevent the default form submission behavior
   console.log("submit payment form") // Log the submission event
 
-  hidePaymentModal() // Hide the payment modal
+  closeModal() // Close the payment modal
   displayThankYouMessage() // Display a thank you message to the user
   orderList.length = 0 // Clear the order list for a fresh start
 }
@@ -61,40 +67,38 @@ function displayThankYouMessage() {
 }
 
 // Function to hide the payment modal
-function hidePaymentModal() {
+function closeModal() {
   const paymentModal = document.getElementById("payment-modal") // Get the payment modal element
-  paymentModal.style.display = "none" // Set the display style to none to hide the modal
+  paymentModal.classList.add("hidden")
+  paymentModal.classList.remove("visible")
+  console.log("close close close")
 }
 
 function renderOrders() {
   const checkoutContainer = document.getElementById("checkout-container")
 
-  // Clear existing content
+  // Clear existing content in the checkout container
   checkoutContainer.innerHTML = ""
 
-  // Create elements
-  const heading = document.createElement("h2")
-  heading.textContent = "Your Order"
+  // Create a heading for the order section
+  const heading = `<h2>Your Order</h2>`
 
+  // Calculate the total price of the orders
   const totalPrice = orderList.reduce((total, order) => total + order.price, 0)
-  const totalPriceEl = document.createElement("div")
-  totalPriceEl.id = "total-price"
+  const totalPriceHtml = `
+    <div id="total-price">
+      <p id="total-price-label">Total Price:</p>
+      <p id="total-price-value">$${totalPrice}</p>
+    </div>
+  `
 
-  const totalPriceLabel = document.createElement("p")
-  totalPriceLabel.id = "total-price-label"
-  totalPriceLabel.textContent = "Total Price:"
-
-  const totalPriceValue = document.createElement("p")
-  totalPriceValue.id = "total-price-value"
-  totalPriceValue.textContent = `$${totalPrice}`
-
-  // Check if there are any orders
+  // Check if there are any orders in the order list
   if (orderList.length > 0) {
-    // Add heading first
-    checkoutContainer.appendChild(heading)
+    // Add heading to the checkout container
+    checkoutContainer.innerHTML += heading
 
-    // Generate and append order items
-    const orderItems = orderList
+    // Generate and append HTML for each order item
+    const orderItemsHtml = orderList
       .map((order) => {
         const { name, price, id } = order
         return `
@@ -111,39 +115,36 @@ function renderOrders() {
       })
       .join("")
 
-    checkoutContainer.innerHTML += orderItems
+    // Append the generated order items HTML to the checkout container
+    checkoutContainer.innerHTML += orderItemsHtml
 
-    // Add total price and payment button
-    totalPriceEl.appendChild(totalPriceLabel)
-    totalPriceEl.appendChild(totalPriceValue)
-    checkoutContainer.appendChild(totalPriceEl)
-    checkoutContainer.appendChild(paymentBtn)
+    // Add total price and append the payment button to the checkout container
+    checkoutContainer.innerHTML += totalPriceHtml
+    checkoutContainer.appendChild(paymentBtn) // Append the payment button
   }
 }
 
 // Function to generate HTML for menu items
 function getMenuItemsHtml(items) {
-  // Map through each item to create HTML structure
-  const menuList = items.map((item) => {
-    // Destructure item properties for easier access
-    const { name, ingredients, id, price, emoji } = item
+  // Map through each item to create HTML structure for the menu
+  return items
+    .map((item) => {
+      const { name, ingredients, id, price, emoji } = item
 
-    // Return the HTML string for each menu item
-    return `
-            <div class="item-container">
-                <p class="emoji">${emoji}</p>
-                <div class="item-info">
-                    <h2 class="item-name">${name}</h2>
-                    <p class="item-ingredients">${ingredients.join(", ")}</p>
-                    <p class="item-price">$${price}</p>
-                </div>
-                <button class="add-item-btn" data-add-item=${id}>+</button> <!-- Button to add item to order -->
-            </div>
+      // Return the HTML string for each menu item
+      return `
+      <div class="item-container">
+          <p class="emoji">${emoji}</p>
+          <div class="item-info">
+              <h2 class="item-name">${name}</h2>
+              <p class="item-ingredients">${ingredients.join(", ")}</p>
+              <p class="item-price">$${price}</p>
+          </div>
+          <button class="add-item-btn" data-add-item=${id}>+</button> <!-- Button to add item to order -->
+      </div>
     `
-  })
-
-  // Join the array of HTML strings into a single string
-  return menuList.join("")
+    })
+    .join("")
 }
 
 // Set the inner HTML of the items container to the generated menu items
@@ -151,4 +152,4 @@ document.querySelector(".items-container").innerHTML =
   getMenuItemsHtml(menuArray) // Call the function with the menuArray
 
 //refer back to add-item-btn whether id or class
-// why is there .class and id-
+// why is there .class and id
