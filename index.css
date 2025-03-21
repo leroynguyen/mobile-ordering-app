@@ -1,30 +1,28 @@
+/* General Styles */
 body {
-    margin: 0;
-    background-color: grey;
+    margin: 20px;
+    background-color: lightgrey;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: "Smythe", san-serif;
-    font-weight: lighter;
+
 }
 
+/* Container Styles */
 .container {
     background-color: white;
     row-gap: 45px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* margin: 0 auto; */
     width: 600px;
     overflow-y: auto;
     height: 1161px;
 }
 
+/* Header Styles */
 header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* row-gap: 0; */
     background-image: url("images/menu-header.png");
     height: 167px;
     color: white;
@@ -44,6 +42,7 @@ header {
     font-size: 22.5px;
 }
 
+/* Heading Styles */
 h2 {
     text-align: center;
     font-size: 28px;
@@ -51,24 +50,7 @@ h2 {
     margin: 0 0 50px 0;
 }
 
-/* #order-container {
-    width: 100%;
-} */
-
-/* main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-/* section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: white;
-} */
-
+/* Items Container Styles */
 .items-container {
     display: flex;
     flex-direction: column;
@@ -76,51 +58,37 @@ h2 {
     justify-content: center;
     margin: 67px 46px 46px 46px;
     row-gap: 45px;
-    /* width: 508px;
-    height: 140px; */
 }
 
+/* Emoji Styles */
 .emoji {
-    margin: 0 31px 0 0;
+    margin: -5px 31px 0 0;
     display: flex;
     align-items: start;
     justify-content: start;
     font-size: 79px;
-    /* column-gap: 31px; */
 }
 
+/* Item Container Styles */
 .item-container {
-    /* This targets all IDs that start with "item-" */
     display: flex;
     margin-top: 3px;
     border-bottom: 1px solid #D2D2D2;
-    /* flex-direction: column; */
-    /* align-items: start; */
-
-    /* justify-content: start; */
-    /* Add your desired styles here */
     width: 508px;
     height: 140px;
-    /* gap: 45px; */
-    /* padding: 10px;
-    border: 1px solid black;
-    margin: 5px;
-    background-color: lightgrey; */
 }
 
-/* #order-container {
-    display: block;
-    margin: 0 auto;
-} */
-
+/* Checkout Container Styles */
 #checkout-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin: 0 45px 53px 45px;
-
+    width: 508px;
+    height: 319px;
 }
 
+/* Thank You Message Styles */
 #thank-you {
     display: flex;
     align-items: center;
@@ -135,27 +103,24 @@ h2 {
     border-radius: 3px;
 }
 
-
+/* Order Item Styles */
 .order-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     row-gap: 20px;
-
-    /* display: block;
-    margin: 0 auto; */
-    /* width: 508px; */
 }
 
+/* Button Styles */
 .remove-item-btn {
     background-color: transparent;
     font-family: Verdana;
+    font-weight: lighter;
     color: #BBBBBB;
     font-size: 12px;
     border: none;
     padding: 0;
     cursor: pointer;
-
 }
 
 .remove-item-btn:hover {
@@ -163,6 +128,25 @@ h2 {
     /* A softer red shade */
 }
 
+#payment-btn {
+    height: 60px;
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-color: #16d899;
+    border-radius: 3.9px;
+    border: transparent;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#payment-btn:hover {
+    background-color: #14b88d;
+}
+
+/* Price Styles */
 #total-price {
     display: flex;
     align-items: center;
@@ -188,7 +172,7 @@ h2 {
     margin: 0;
 }
 
-
+/* Item Info Styles */
 .item-info {
     margin: 0;
     display: flex;
@@ -208,7 +192,7 @@ h2 {
 .item-ingredients {
     margin: 0;
     font-size: 16px;
-    color: #8b8b8b
+    color: #8b8b8b;
 }
 
 .item-price {
@@ -218,6 +202,7 @@ h2 {
     color: black;
 }
 
+/* Add Item Button Styles */
 .add-item-btn {
     width: 50px;
     height: 50px;
@@ -234,33 +219,21 @@ h2 {
     justify-content: center;
     cursor: pointer;
     margin-left: auto;
-    line-height: 50px;
-    /* Ensure the text is vertically centered */
+    line-height: normal;
+    /* Remove line-height to ensure centering */
     text-align: center;
-    /* Center the text horizontally */
+    transition: background-color 0.3s, border-color 0.3s;
+    /* Added transition for hover */
 }
 
-
-#payment-btn {
-    height: 60px;
-    font-family: Verdana;
-    font-weight: bold;
-    font-size: 16px;
-    color: white;
-    background-color: #16d899;
-    border-radius: 3.9px;
-    border: transparent;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
+.add-item-btn:hover {
+    background-color: #f0f0f0;
+    /* Light grey background on hover */
+    border-color: #cccccc;
+    /* Change border color on hover */
 }
 
-#payment-btn:hover {
-    background-color: #14b88d;
-    /* Darker shade for hover effect */
-    color: white;
-    /* Keep text color white */
-}
-
+/* Payment Modal Styles */
 .payment-modal {
     display: none;
     margin: auto;
@@ -294,6 +267,7 @@ h2 {
     margin-bottom: 52px;
 }
 
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
@@ -316,6 +290,7 @@ input::placeholder {
     margin-left: 25px;
 }
 
+/* Modal Payment Button Styles */
 .modal-pay-btn {
     width: 476px;
     height: 71px;
@@ -327,8 +302,14 @@ input::placeholder {
     border: none;
     color: white;
     background-color: #16d899;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+.modal-pay-btn:hover {
+    background-color: #14b88d;
+}
+
+/* Modal Close Button Styles */
 #modal-close-btn {
     width: auto;
     height: auto;
@@ -350,13 +331,12 @@ input::placeholder {
     color: #14b88d;
 }
 
-/* Add this class to control the visibility of the modal */
+/* Modal Visibility Classes */
 .visible {
     display: flex;
     /* or use flex if you want to center content */
 }
 
-/* Existing hidden class */
 .hidden {
     display: none;
     /* Class to hide the modal */
@@ -365,33 +345,3 @@ input::placeholder {
 /* questions
 - why can't we just use img tags? what's more preferred, good practice?
 - why id and class havesa me name? w */
-
-/* Base button styles */
-button {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
-    border: none;
-    border-radius: 3.9px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    /* Smooth transition */
-}
-
-
-
-
-/* Hover effects */
-button:hover {
-    background-color: #14b88d;
-    /* Darker shade for hover effect */
-    color: white;
-    /* Change text color on hover */
-}
-
-/* Specific hover effect for add-item-btn */
-.add-item-btn:hover {
-    background-color: #f0f0f0;
-    /* Light grey background on hover */
-    border-color: #cccccc;
-    /* Change border color on hover */
-}

@@ -1,89 +1,108 @@
 import { menuArray } from "./menuItems.js"
 
 const orderList = []
-// Create payment Btn
+
+// Create payment button
 const paymentBtn = document.createElement("button")
 paymentBtn.id = "payment-btn"
 paymentBtn.textContent = "Complete Order"
 
 const paymentForm = document.getElementById("payment-form")
+const paymentModal = document.getElementById("payment-modal")
+const checkoutContainer = document.getElementById("checkout-container")
 
+// Handle click events on the document
 document.addEventListener("click", (e) => {
+  // Add item to order if add button is clicked
   if (e.target.dataset.addItem) {
-    const matchedItem = menuArray.find(
-      (item) => e.target.dataset.addItem == item.id
-    )
-    console.log(e)
-    orderList.push(matchedItem)
-  } else if (e.target.dataset.removeItem) {
-    const matchedItem = menuArray.find(
-      (item) => e.target.dataset.removeItem == item.id
-    )
-    orderList.pop(matchedItem)
-  } else if (e.target.id === "modal-close-btn") {
-    console.log("123123")
-    closeModal()
-  } else if (orderList.length >= 0) {
-    return
+    addItemToOrder(e.target.dataset.addItem)
+    renderOrders()
+    return // Exit after adding an item
   }
-  renderOrders()
+
+  // Handle item removal or modal close if order list is not empty
+  if (orderList.length > 0) {
+    if (e.target.dataset.removeItem) {
+      removeItemFromOrder(e.target.dataset.removeItem)
+      renderOrders()
+    } else if (e.target.id === "modal-close-btn") {
+      closeModal()
+    }
+  }
+  // Close modal if click is outside and modal is visible
+  if (
+    !paymentModal.contains(e.target) &&
+    !paymentBtn.contains(e.target) &&
+    !paymentModal.classList.contains("hidden")
+  ) {
+    closeModal()
+  }
 })
 
-paymentBtn.addEventListener("click", () => {
-  const paymentModal = document.getElementById("payment-modal")
-  paymentModal.classList.remove("hidden")
-  console.log("test 123 123")
-  paymentModal.classList.add("visible")
-  console.log("click click")
-  document.body.appendChild(paymentModal)
-})
-
-paymentForm.addEventListener("submit", handlePaymentSubmit)
-
-// Function to handle the payment form submission
-function handlePaymentSubmit(e) {
-  e.preventDefault() // Prevent the default form submission behavior
-  console.log("submit payment form") // Log the submission event
-
-  closeModal() // Close the payment modal
-  displayThankYouMessage() // Display a thank you message to the user
-  orderList.length = 0 // Clear the order list for a fresh start
+// Add item to order based on item ID
+function addItemToOrder(itemId) {
+  const matchedItem = menuArray.find((item) => itemId == item.id)
+  if (matchedItem) {
+    orderList.push(matchedItem)
+    console.log("Item added:", matchedItem.name)
+  }
 }
 
-// Function to display a thank you message after payment
+// Remove item from order based on item ID
+function removeItemFromOrder(itemId) {
+  const itemIndex = orderList.findIndex((item) => itemId == item.id)
+  if (itemIndex !== -1) {
+    orderList.splice(itemIndex, 1)
+    console.log("Item removed:", itemId)
+  }
+}
+
+// Open the payment modal when payment button is clicked
+paymentBtn.addEventListener("click", () => {
+  paymentModal.classList.remove("hidden")
+  paymentModal.classList.add("visible")
+  document.body.appendChild(paymentModal)
+  console.log("Payment modal opened.")
+})
+
+// Handle payment form submission
+paymentForm.addEventListener("submit", handlePaymentSubmit)
+
+// Prevent default form submission, close modal, show thank you message, and reset order list
+function handlePaymentSubmit(e) {
+  e.preventDefault()
+  console.log("Processing payment...")
+  closeModal()
+  displayThankYouMessage()
+  orderList.length = 0 // Clear the order list
+}
+
+// Display a thank you message dynamically inserting the user's name
 function displayThankYouMessage() {
-  // const checkoutContainer = document.getElementsByClassName("checkout")[0]
-  const checkoutContainer = document.getElementById("checkout-container")
-
   const thankYouMessage = document.createElement("h2")
-  thankYouMessage.innerHTML = `
-    <p id="thank-you">Thanks, ${
-      document.getElementById("name-input").value
-    }! Your order is on its way!</p>
-    `
-
+  thankYouMessage.innerHTML = `<p id="thank-you">Thanks, ${
+    document.getElementById("name-input").value
+  }! Your order is on its way!</p>`
   checkoutContainer.innerHTML = ""
   checkoutContainer.appendChild(thankYouMessage)
 }
 
-// Function to hide the payment modal
+// Close the payment modal
 function closeModal() {
-  const paymentModal = document.getElementById("payment-modal") // Get the payment modal element
   paymentModal.classList.add("hidden")
   paymentModal.classList.remove("visible")
-  console.log("close close close")
+  console.log("Payment modal closed.")
 }
 
+// Render orders in the checkout container
 function renderOrders() {
-  const checkoutContainer = document.getElementById("checkout-container")
-
-  // Clear existing content in the checkout container
+  // Clear existing content
   checkoutContainer.innerHTML = ""
 
-  // Create a heading for the order section
+  // Heading for the order section
   const heading = `<h2>Your Order</h2>`
 
-  // Calculate the total price of the orders
+  // Calculate the total price of all items
   const totalPrice = orderList.reduce((total, order) => total + order.price, 0)
   const totalPriceHtml = `
     <div id="total-price">
@@ -92,55 +111,41 @@ function renderOrders() {
     </div>
   `
 
-  // Check if there are any orders in the order list
+  // Check if there are any items in the order list
   if (orderList.length > 0) {
-    // Add heading to the checkout container
     checkoutContainer.innerHTML += heading
 
     // Generate and append HTML for each order item
     const orderItemsHtml = orderList
-      .map((order) => {
-        const { name, price, id } = order
-        return `
-          <div class="order-item">
-              <p class="order-name">
-                  ${name}
-                  <button class="remove-item-btn" data-remove-item=${id}>remove</button>
-              </p>
-              <p class="order-price">
-                  $${price}
-              </p>
-          </div>
-        `
-      })
+      .map(
+        ({ name, price, id }) => `
+      <div class="order-item">
+        <p class="order-name">${name}<button class="remove-item-btn" data-remove-item=${id}>remove</button></p>
+        <p class="order-price">$${price}</p>
+      </div>
+    `
+      )
       .join("")
 
-    // Append the generated order items HTML to the checkout container
     checkoutContainer.innerHTML += orderItemsHtml
-
-    // Add total price and append the payment button to the checkout container
     checkoutContainer.innerHTML += totalPriceHtml
-    checkoutContainer.appendChild(paymentBtn) // Append the payment button
+    checkoutContainer.appendChild(paymentBtn)
   }
 }
 
 // Function to generate HTML for menu items
 function getMenuItemsHtml(items) {
-  // Map through each item to create HTML structure for the menu
   return items
     .map((item) => {
-      const { name, ingredients, id, price, emoji } = item
-
-      // Return the HTML string for each menu item
       return `
       <div class="item-container">
-          <p class="emoji">${emoji}</p>
-          <div class="item-info">
-              <h2 class="item-name">${name}</h2>
-              <p class="item-ingredients">${ingredients.join(", ")}</p>
-              <p class="item-price">$${price}</p>
-          </div>
-          <button class="add-item-btn" data-add-item=${id}>+</button> <!-- Button to add item to order -->
+        <p class="emoji">${item.emoji}</p>
+        <div class="item-info">
+          <h2 class="item-name">${item.name}</h2>
+          <p class="item-ingredients">${item.ingredients.join(", ")}</p>
+          <p class="item-price">$${item.price}</p>
+        </div>
+        <button class="add-item-btn" data-add-item=${item.id}>+</button>
       </div>
     `
     })
@@ -149,7 +154,4 @@ function getMenuItemsHtml(items) {
 
 // Set the inner HTML of the items container to the generated menu items
 document.querySelector(".items-container").innerHTML =
-  getMenuItemsHtml(menuArray) // Call the function with the menuArray
-
-//refer back to add-item-btn whether id or class
-// why is there .class and id
+  getMenuItemsHtml(menuArray)
